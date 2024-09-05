@@ -6,7 +6,7 @@ const CategoryBox = ({ label, icon: Icon, selected }) => {
   const [params, setParams] = useSearchParams()
   const navigate = useNavigate()
   const handleClick = () => {
-    let currentQuery = {}
+    let currentQuery = {} 
     if (params) {
       currentQuery = qs.parse(params.toString())
     }

@@ -1,6 +1,6 @@
 [
   {
-    "_id": "654f6d935abba09d18da69cb",
+   
     "location": "Canterbury, United Kingdom",
     "title": "Bumble Barn at Great Field Farm",
     "from": "2023-11-27T18:00:00.000Z",
@@ -19,7 +19,7 @@
     "category": "Modern"
   },
   {
-    "_id": "654f6d935ee09d18da69cb",
+    
     "location": "Gaular, Norway",
     "title": "Breathtaking Mountain views in cozy Birdbox",
     "from": "2023-11-25T18:00:00.000Z",
@@ -36,5 +36,25 @@
       "email": "shakilatik.ph@gmail.com"
     },
     "category": "Beach"
+  },
+  {
+    
+    "location": "Sand Beach, Norway",
+    "title": "Breathtaking Mountain views in cozy Birdbox",
+    "from": "2023-11-25T18:00:00.000Z",
+    "to": "2023-11-29T18:00:00.000Z",
+    "price": 269,
+    "guests": "2",
+    "bedrooms": "1",
+    "bathrooms": "1",
+    "description": "Enjoy the relaxed and comfortable enclosure of the Birdbox. Sleep right beside nature and its amazing  surroundings. Lay down and look at the spectacular mountains all around you. Put on your skis and have a breathtaking journey around the nearby trails. Hike down to Langelandsvatnet in the summer and enjoy swimming in energizing water. Your imagination is the limit for what you can experience.",
+    "image": "https://i.ibb.co/x6k9xNp/tim-gouw-r-XBwosfg-G-c-unsplash.jpg",
+    "host": {
+      "name": "Shakil Ahmed Atik",
+      "image": "https://lh3.googleusercontent.com/a/ACg8ocJpxSpFQvm4fucJxMSOYG07EY-4eEqymED0zn2w8hBgHw=s96-c",
+      "email": "shakilatik.ph@gmail.com"
+    },
+    "category": "Countryside"
   }
+
 ]

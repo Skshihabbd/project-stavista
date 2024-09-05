@@ -1,12 +1,24 @@
 import { AiOutlineMenu } from 'react-icons/ai'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import useAuth from '../../../hooks/useAuth'
 import avatarImg from '../../../assets/images/placeholder.jpg'
 
 const MenuDropdown = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const { user } = useAuth()
+  const { user,logOut } = useAuth()
+  const navigate=useNavigate()
+  const LogOut=async()=>{
+    
+    try{
+      const log= await logOut()
+      navigate('/login')
+    }
+    catch(err){
+      console.log(err)
+    }
+    
+  }
 
   return (
     <div className='relative'>
@@ -41,7 +53,7 @@ const MenuDropdown = () => {
           <div className='flex flex-col cursor-pointer'>
             <Link
               to='/'
-              className='block md:hidden px-4 py-3 hover:bg-neutral-100 transition font-semibold'
+              className='block md:hidden   px-4 py-3 hover:bg-neutral-100 transition font-semibold'
             >
               Home
             </Link>
@@ -51,6 +63,11 @@ const MenuDropdown = () => {
               className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
             >
               Login
+            </Link>
+            <Link>
+            <button onClick={LogOut}  className='px-4 py-1 hover:bg-neutral-100 transition font-semibold'>
+              LogOut
+            </button>
             </Link>
             <Link
               to='/signup'
