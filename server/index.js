@@ -3,7 +3,7 @@ const app = express();
 require("dotenv").config();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const jwt = require("jsonwebtoken");
 // const morgan = require("morgan");
 const port = process.env.PORT || 5005;
@@ -108,11 +108,16 @@ async function run() {
     //   }
     // })
 
+    app.get("/room/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await roomCollection.findOne(query);
+      res.send(result);
+    });
+
     app.post("/jwt", async (req, res) => {
       const user = req.body;
-
-      console.log(user);
-      const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+      token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: "300d",
       });
 
