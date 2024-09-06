@@ -9,17 +9,19 @@ const Login = () => {
   const googleLogin = async () => {
     try {
       const result = await signInWithGoogle();
-      const data = await axios.post(`${import.meta.env.VITE_SERVER_URL}/jwt`, {
-        email: result?.user?.email,
-      });
+      const data = await axios.post(
+        `${import.meta.env.VITE_SERVER_URL}/jwt`,
+        {
+          email: result?.user?.email,
+        },
+        { withCredentials: true }
+      );
       navigate("/");
       console.log(result?.user);
       console.log(data?.data);
     } catch (error) {
       console.log(error);
     }
-
-    // navigate('/')
   };
   return (
     <div className="flex justify-center items-center min-h-screen">
