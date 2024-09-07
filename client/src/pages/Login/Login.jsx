@@ -1,13 +1,56 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
+import toast from "react-hot-toast";
+import { FaSpinner } from "react-icons/fa6";
+import { useState } from "react";
 const Login = () => {
-  const { signInWithGoogle } = useAuth();
+  const { user, signInWithGoogle, signIn, resetPassword, loading, setLoading } =
+    useAuth();
+  console.log(user);
+  const location = useLocation();
+  const from = location?.state || "/";
+  const [email, setEmail] = useState();
   // console.log(import.meta.env.VITE_SERVER_URL)
   const navigate = useNavigate();
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+
+    const email = form.email.value;
+    const password = form.password.value;
+
+    try {
+      // user registration
+      if (user) {
+        return await toast.error("user already logged in "), navigate("/");
+      }
+      const result = await signIn(email, password);
+      console.log(result);
+      // save user name and password
+
+      const info = await axios.post(
+        `${import.meta.env.VITE_SERVER_URL}/jwt`,
+        {
+          email: result?.user?.email,
+        },
+        { withCredentials: true }
+      );
+      navigate(from);
+      toast.success("signin successfull");
+    } catch (err) {
+      console.log(err);
+      toast.error(err.message);
+      setLoading(false);
+    }
+  };
+
   const googleLogin = async () => {
     try {
+      if (user) {
+        return await toast.error("user already logged in "), navigate("/");
+      }
       const result = await signInWithGoogle();
       const data = await axios.post(
         `${import.meta.env.VITE_SERVER_URL}/jwt`,
@@ -16,11 +59,24 @@ const Login = () => {
         },
         { withCredentials: true }
       );
-      navigate("/");
+      navigate(from);
       console.log(result?.user);
       console.log(data?.data);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handleresetPassword = async () => {
+    console.log(email);
+    try {
+      await resetPassword(email);
+      toast.success("reset email send to your gmail box");
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      toast.error(err.message);
+      setLoading(false);
     }
   };
   return (
@@ -33,6 +89,7 @@ const Login = () => {
           </p>
         </div>
         <form
+          onSubmit={handleSignIn}
           noValidate=""
           action=""
           className="space-y-6 ng-untouched ng-pristine ng-valid"
@@ -43,6 +100,7 @@ const Login = () => {
                 Email address
               </label>
               <input
+                onBlur={(e) => setEmail(e.target.value)}
                 type="email"
                 name="email"
                 id="email"
@@ -72,15 +130,23 @@ const Login = () => {
 
           <div>
             <button
+              disabled={loading}
               type="submit"
               className="bg-rose-500 w-full rounded-md py-3 text-white"
             >
-              Continue
+              {loading ? (
+                <FaSpinner className="animate-spin m-auto " />
+              ) : (
+                "Continue"
+              )}
             </button>
           </div>
         </form>
         <div className="space-y-1">
-          <button className="text-xs hover:underline hover:text-rose-500 text-gray-400">
+          <button
+            onClick={handleresetPassword}
+            className="text-xs hover:underline hover:text-rose-500 text-gray-400"
+          >
             Forgot password?
           </button>
         </div>

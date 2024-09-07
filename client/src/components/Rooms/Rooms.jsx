@@ -26,20 +26,6 @@ const Rooms = () => {
   });
   console.log(data);
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   fetch(`${import.meta.env.VITE_SERVER_URL}/roome`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       if (category) {
-  //         const filtered = data.filter((room) => room.category === category);
-  //         setRooms(filtered);
-  //       } else setRooms(data);
-
-  //       setLoading(false);
-  //     });
-  // }, [category]);
-
   if (isLoading) return <Loader />;
   return (
     <Container>
