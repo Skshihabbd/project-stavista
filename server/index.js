@@ -142,7 +142,13 @@ async function run() {
     });
 
     app.get("/roome", async (req, res) => {
-      const allRooms = await roomCollection.find().toArray();
+      const category = req.query.category;
+
+      let query = {};
+      // key and value same name hole {category:category} evabe likha jai
+      if (category !== "null") query = { category };
+      console.log(query);
+      const allRooms = await roomCollection.find(query).toArray();
       res.send(allRooms);
     });
   } finally {

@@ -9,15 +9,18 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiousCommon from "../../hooks/useAxiousCommon";
 
 const Rooms = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const name = searchParams.get("category");
+  console.log(name);
   const [rooms, setRooms] = useState([]);
   const [params, setParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
   const category = params.get("category");
   const axiosCommon = useAxiousCommon();
   const { data, isLoading } = useQuery({
-    queryKey: ["roome"],
+    queryKey: ["roome", name],
     queryFn: async () => {
-      const { data } = await axiosCommon.get("/roome");
+      const { data } = await axiosCommon.get(`/roome?category=${name}`);
       return data;
     },
   });
