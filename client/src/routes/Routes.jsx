@@ -6,6 +6,10 @@ import Login from "../pages/Login/Login";
 import SignUp from "../pages/SignUp/SignUp";
 import RoomDetails from "../pages/RoomDetails/RoomDetails";
 import PrivateRoute from "./PrivateRoute";
+import DashboardLayout from "../Layout/DashboardLayout";
+import Statistics from "../pages/Dashboard/common/Statistics";
+import Addroom from "../pages/Dashboard/host/Addroom";
+import Mylisting from "../pages/Dashboard/host/Mylisting";
 
 export const router = createBrowserRouter([
   {
@@ -21,7 +25,6 @@ export const router = createBrowserRouter([
         path: "/room/:id",
         element: (
           <PrivateRoute>
-            {" "}
             <RoomDetails />
           </PrivateRoute>
         ),
@@ -30,4 +33,22 @@ export const router = createBrowserRouter([
   },
   { path: "/login", element: <Login /> },
   { path: "/signup", element: <SignUp /> },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
+    children: [
+      {
+        index: true,
+        element: <Statistics></Statistics>,
+      },
+      {
+        path: "add-room",
+        element: <Addroom></Addroom>,
+      },
+      {
+        path: "my-listing",
+        element: <Mylisting />,
+      },
+    ],
+  },
 ]);

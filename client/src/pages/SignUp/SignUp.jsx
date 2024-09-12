@@ -12,6 +12,7 @@ const SignUp = () => {
     updateUserProfile,
     loading,
     setLoading,
+    user,
   } = useAuth();
   const navigate = useNavigate();
   const handleSignup = async (e) => {
@@ -27,6 +28,10 @@ const SignUp = () => {
     console.log(formData);
     try {
       setLoading(true);
+      if (user) {
+        setLoading(false);
+        return toast.error("user Already exist please log out");
+      }
       const { data } = await axios.post(
         `https://api.imgbb.com/1/upload?key=${
           import.meta.env.VITE_IMGBB_API_KEY
@@ -34,6 +39,7 @@ const SignUp = () => {
         formData
       );
       console.log(data.data.display_url);
+
       // user registration
       const result = await createUser(email, password);
       console.log(result);
@@ -47,16 +53,19 @@ const SignUp = () => {
         },
         { withCredentials: true }
       );
+      setLoading(false);
       navigate("/");
       toast.success("signup successfull");
     } catch (err) {
       console.log(err);
       toast.error(err.message);
+      setLoading(false);
     }
   };
 
   const handleGoogle = async () => {
     try {
+      if (user) return toast.error("user Already exist please log out");
       const result = await signInWithGoogle();
       const info = await axios.post(
         `${import.meta.env.VITE_SERVER_URL}/jwt`,
@@ -69,6 +78,7 @@ const SignUp = () => {
       toast.success("signup Successfull");
     } catch (err) {
       console.log(err);
+      setLoading(false);
     }
   };
   return (
