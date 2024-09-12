@@ -1,6 +1,14 @@
+import { useState } from "react";
 import { categories } from "../Categories/CategoriesData";
-import { DateRangePicker } from "react-date-range";
+import { DateRange, DateRangePicker } from "react-date-range";
 const AddRoomForm = () => {
+  const [state, setState] = useState([
+    {
+      startDate: new Date(),
+      endDate: null,
+      key: "selection",
+    },
+  ]);
   return (
     <div className="w-full min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50">
       <form>
@@ -41,7 +49,12 @@ const AddRoomForm = () => {
               <label htmlFor="location" className="block text-gray-600">
                 Select Availability Range
               </label>
-              {/* Calender */}
+              <DateRange
+                editableDateInputs={true}
+                onChange={(item) => setState([item.selection])}
+                moveRangeOnFirstSelection={false}
+                ranges={state}
+              />
             </div>
           </div>
           <div className="space-y-6">
