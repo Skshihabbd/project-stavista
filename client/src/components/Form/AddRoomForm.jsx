@@ -1,10 +1,16 @@
 import { useState } from "react";
 import { categories } from "../Categories/CategoriesData";
 import { DateRange } from "react-date-range";
-const AddRoomForm = ({ date, handleDate }) => {
+const AddRoomForm = ({
+  date,
+  handleDate,
+  handleSubmit,
+  setImageView,
+  imageView,
+}) => {
   return (
     <div className="w-full min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50">
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div className="space-y-6">
             <div className="space-y-1 text-sm">
@@ -30,6 +36,9 @@ const AddRoomForm = ({ date, handleDate }) => {
                 className="w-full px-4 py-3 border-rose-300 focus:outline-rose-500 rounded-md"
                 name="category"
               >
+                <option disabled selected value="">
+                  Select a category
+                </option>
                 {categories.map((category) => (
                   <option value={category.label} key={category.label}>
                     {category.label}
@@ -77,10 +86,14 @@ const AddRoomForm = ({ date, handleDate }) => {
                       id="image"
                       accept="image/*"
                       hidden
+                      onChange={(e) =>
+                        setImageView(URL.createObjectURL(e.target.files[0]))
+                      }
                     />
                     <div className="bg-rose-500 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-rose-500">
                       Upload Image
                     </div>
+                    <img className="h-16" src={imageView} alt="" />
                   </label>
                 </div>
               </div>
