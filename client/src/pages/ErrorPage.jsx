@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 const ErrorPage = () => {
   const navigate = useNavigate()
+  // shihab
 
   return (
     <section className='bg-white '>
